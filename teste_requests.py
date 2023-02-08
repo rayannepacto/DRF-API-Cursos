@@ -29,6 +29,6 @@ headers = {'Authorization': 'Token eb3304bd86c842b8050497a3939a7cb37be5b010'}
 cursos = requests.get(url='http://127.0.0.1:8000/api/v2/cursos/', headers=headers)
 
 
-#print(cursos.json())
+print(cursos.json())
 
 
