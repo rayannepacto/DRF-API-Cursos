@@ -8,6 +8,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
+
+Token: eb3304bd86c842b8050497a3939a7cb37be5b010 - rayanne
+Token: af5ed88a1b937a1a1649d7c5cbff8e4fa913720e - joao
 """
 import os
 from pathlib import Path
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
 
     'django_filters',
     'rest_framework',
+    'rest_framework.authtoken',
+
     'cursos',
 ]
 
@@ -129,14 +134,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #DRF
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':(
-        'rest_framework.authentication.SessionAuthentication',
+     'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSIONS_CLASSES':(
-        'rest_framework.permission.IsAuthenticateOrReadOnly',
+        'rest_framework.permission.IsAuthenticatedOrReadOnly',
+        
     ), 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1
+    'PAGE_SIZE': 5,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/minute',
+        'user': '20/minute'
+    }
 }
 
 
